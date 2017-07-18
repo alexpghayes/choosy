@@ -2,7 +2,7 @@
 choosy
 ======
 
-This package is didactic and tidy implementation of **multinomial logistic regression** by Alex Hayes and Tiffany Tang of Rice University.
+This package is a didactic and tidy implementation of **multinomial logistic regression** by Alex Hayes and Tiffany Tang of Rice University.
 
 To Do / Roadmap
 ===============
@@ -26,10 +26,7 @@ Once we get underway, you'll be able to install this package with:
 
 ``` r
 # install.packages('devtools')
-devtools::install_github('alexpghayes/choosy')
-#> Downloading GitHub repo alexpghayes/choosy@master
-#> from URL https://api.github.com/repos/alexpghayes/choosy/zipball/master
-#> Installation failed: Not Found (404)
+# devtools::install_github('alexpghayes/choosy')
 ```
 
 Motivation
