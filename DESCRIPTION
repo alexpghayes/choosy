@@ -1,0 +1,15 @@
+Package: choosy
+Title: Exploration of Optimization Methods for Multinomial Logistic Regression
+Version: 0.0.0.9000
+Author: person("Alex", "Hayes", email = "alexpghayes@gmail.com", role = c("aut", "cre"))
+  person("Tiffany", "Tang", email = "tmt3@rice.edu", role = c("aut", "cre"))
+Description: Some implementations of optimization methods for multinomial 
+    logistic regression to teach ourselves about optimizers in R, fancy versions
+    of gradient descent like L-BFGS, ADMM, C++ and writing R packages.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: NA
+RoxygenNote: NA
+Suggests: NA
+VignetteBuilder: NA
