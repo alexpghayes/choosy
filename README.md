@@ -12,13 +12,11 @@ To Do / Roadmap
 3.  L-BFGS
 4.  Newton's method
 5.  ADMM
+6.  Line/beam search for step size
 
 Eventually we may want the following methods:
 
 -   accept `recipe` objects?
--   `print` method
--   `summary` method
--   `predict` method
 -   `tidy` method
 -   `augment` method
 -   `plot` method

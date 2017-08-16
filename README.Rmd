@@ -25,13 +25,11 @@ The ideal of this package is to get some practice with optimization algorithms t
 1. L-BFGS
 1. Newton's method
 1. ADMM
+1. Line/beam search for step size
 
 Eventually we may want the following methods:
 
 * accept `recipe` objects?
-* `print` method
-* `summary` method
-* `predict` method
 * `tidy` method
 * `augment` method
 * `plot` method
