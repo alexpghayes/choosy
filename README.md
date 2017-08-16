@@ -2,15 +2,19 @@
 choosy
 ======
 
-This package is a didactic and tidy implementation of **multinomial logistic regression** by Alex Hayes and Tiffany Tang of Rice University.
+The ideal of this package is to get some practice with optimization algorithms to fit **multinomial logistic regression** models.
 
 To Do / Roadmap
 ===============
 
-Tentative interface: `choosy(formula, data, method, weights)`
+1.  Gradient descent in R
+2.  Calling Rcpp/Python code
+3.  L-BFGS
+4.  Newton's method
+5.  ADMM
 
--   `choosy` constructor, validator, convenience constructor
--   methods to fit model: gradient descent, `optim`, L-BFGS, Newton's, ADMM, C++ versions of these, calling Python from COMP 540
+Eventually we may want the following methods:
+
 -   accept `recipe` objects?
 -   `print` method
 -   `summary` method

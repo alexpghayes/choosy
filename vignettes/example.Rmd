@@ -1,0 +1,22 @@
+---
+title: "Example usage and comparison to nnet::multinom"
+author: "Alex Hayes and Tiffany Tang"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(nnet)
+data(iris)
+
+fit <- multinom(Species ~ ., data = iris)
+
+summary(fit)
+predict(fit, iris)
+predict(fit, iris, type = "prob")
+```
+
