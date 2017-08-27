@@ -2,13 +2,13 @@ new_choosy <- function() {
   model <- list(
     coefs = NULL,
     formula = NULL,
-    trained = FALSE
+    trained = FALSE,
+    objective = NULL
   )
   class(model) <- "choosy"
   model
 }
 
-# TODO: how to export generics
 fit <- function(model, formula, data, ...) {
   UseMethod("fit")
 }
@@ -17,37 +17,46 @@ predict_proba <- function(model, newdata) {
   UseMethod("predict_proba")
 }
 
+# response should be 1-indexed integer
+
 fit.choosy <- function(model, formula, data, learning_rate = 1e-3, reg = 1e-5,
                        num_iters = 100, batch_size = 200, verbose = TRUE) {
 
-  X <- model.matrix(formula, data)
-  flip <- as.formula(paste("~ 0 + ", deparse(rlang::f_lhs(formula))))
-  y <- model.matrix(flip, data)
+  response <- all.vars(formula)[1]
+  y <- data[[response]]
 
-  num_classes <- dim(y)[2]
+  if (!is.integer(y))
+    stop("Response variable must be integers 1...num_classes.", call. = FALSE)
+
+  X <- model.matrix(formula, data)
+  y <- y - 1                        # python zero indexed
+
+  num_classes <- max(y) + 1
   num_feat <- dim(X)[2]
 
   coefs <- matrix(runif(num_classes * num_feat), ncol = num_classes)
   history <- numeric(num_iters)
 
+  py_code <- py_run_file("./resources/softmax_grad_loss.py")
+
   for (iter in 1:num_iters) {
 
     # TODO: mini-batches for stochastic gradient descent
 
-    # TODO: implement loss and gradient functions or figure out how to call
-    # softmax.py file
+    loss_grad <- py_code$loss_grad(coefs, X, y, reg)
 
-    loss <- softmax_loss(X, y, reg)
-    grad <- softmax_grad(X, y, reg)
+    loss <- loss_grad[[1]]
+    grad <- loss_grad[[2]]
 
     history[iter] <- loss
 
     coefs <- coefs - learning_rate * grad
 
-    if (verbose)
+    if (verbose && iter %% 100 == 0)
       print(glue::glue("iteration: {iter}/{num_iters}  loss: {loss}"))
   }
 
+  model$objective <- history
   model$trained <- TRUE
   model$coefs <- coefs
   model$formula <- formula
@@ -80,3 +89,21 @@ summary.choosy <- function(model) {
   # TODO: make this better
   print(model$coefs)
 }
+
+####################################################3
+
+library(nnet)
+data(iris)
+
+fit <- multinom(Species ~ ., data = iris)
+
+summary(fit)
+predict(fit, iris)
+predict(fit, iris, type = "prob")
+
+mod <- fit(model, Species ~ ., data = iris, num_iters = 1000, learning_rate = 0.1)
+obj <- mod$objective
+plot(seq_along(obj), obj)
+preds <- predict(mod, iris)
+sum(preds == data$Species)
+y

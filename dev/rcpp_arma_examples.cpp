@@ -6,13 +6,13 @@ arma::mat matrix_multiply(arma::mat X, arma::mat Y) {
   return X * Y;
 }
 
-//
-// // [[Rcpp::depends(RcppArmadillo)]]
-// // [[Rcpp::export]]
-// arma::vec max_by_row(arma::mat X) {
-//   // TODO
-// }
-//
+
+// [[Rcpp::depends(RcppArmadillo)]]
+// [[Rcpp::export]]
+arma::vec max_by_row(arma::mat X) {
+  // TODO
+}
+
 // // [[Rcpp::depends(RcppArmadillo)]]
 // // [[Rcpp::export]]
 // arma::mat broadcast_subtraction_across_rows(arma::mat X, arma::vec v) {
