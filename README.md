@@ -7,12 +7,11 @@ The ideal of this package is to get some practice with optimization algorithms t
 To Do / Roadmap
 ===============
 
-1.  Gradient descent in R
-2.  Calling Rcpp/Python code
-3.  L-BFGS
-4.  Newton's method
-5.  ADMM
-6.  Line/beam search for step size
+1.  (Backtracking?) Line search for gradient descent / selection of optimization method
+2.  BFGS / L-BFGS
+3.  Newton's method
+4.  ADMM
+5.  Cpp once `xtensor-r` is easy
 
 Eventually we may want the following methods:
 

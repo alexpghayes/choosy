@@ -34,8 +34,16 @@ fit.choosy <- function(model, formula, data, learning_rate = 1e-3, reg = 1e-5,
   num_classes <- max(y) + 1
   num_feat <- dim(X)[2]
 
-  coefs <- matrix(runif(num_classes * num_feat), ncol = num_classes)
+  # why start the coefs so small?
+  if (!model$trained)
+    coefs <- matrix(rnorm(num_classes * num_feat) * 0.0001, ncol = num_classes)
   history <- numeric(num_iters)
+
+  # different optimization strategies. also: line_search
+
+  # loss for (small!?) random coefs should be ~log(num_classes)
+
+  py_code$loss_grad(coefs, X, y, 0)
 
   py_code <- py_run_file("./resources/softmax_grad_loss.py")
 
@@ -92,18 +100,27 @@ summary.choosy <- function(model) {
 
 ####################################################3
 
-library(nnet)
+
 data(iris)
 
-fit <- multinom(Species ~ ., data = iris)
+iris <- iris %>%
+  mutate_at(vars(Species), as.integer)
 
-summary(fit)
-predict(fit, iris)
-predict(fit, iris, type = "prob")
-
-mod <- fit(model, Species ~ ., data = iris, num_iters = 1000, learning_rate = 0.1)
+model <- fit(model, Species ~ ., data = iris, num_iters = 15000, learning_rate = 0.1)
 obj <- mod$objective
 plot(seq_along(obj), obj)
 preds <- predict(mod, iris)
-sum(preds == data$Species)
+sum(preds == as.integer(data$Species))
 y
+
+
+###
+library(nnet)
+nnet_fit <- multinom(Species ~ ., data = iris)
+
+summary(fit)
+preds2 <- predict(nnet_fit, iris)
+sum(preds2 == iris$Species)
+
+predict(fit, iris, type = "prob")
+
